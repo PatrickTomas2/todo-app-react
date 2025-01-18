@@ -1,14 +1,22 @@
-import { useState } from "react";
 import AppButton from "./AppButton";
 
 interface Props {
-  onHandleButton: (title: string, description: string) => void;
+  title: string;
+  description: string;
+  isEdit: boolean;
+  onHandleButton: (title: string, description: string, index?: number) => void;
+  onHandleChangeTitle: (title: string) => void;
+  onHandleChangeDescription: (description: string) => void;
 }
 
-const AppForm = ({ onHandleButton }: Props) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-
+const AppForm = ({
+  title,
+  description,
+  isEdit,
+  onHandleButton,
+  onHandleChangeDescription,
+  onHandleChangeTitle,
+}: Props) => {
   return (
     <>
       <div className="titleInput">
@@ -19,7 +27,7 @@ const AppForm = ({ onHandleButton }: Props) => {
           placeholder="Title"
           value={title}
           onChange={(e) => {
-            setTitle(e.target.value);
+            onHandleChangeTitle(e.target.value);
           }}
         />
       </div>
@@ -29,7 +37,7 @@ const AppForm = ({ onHandleButton }: Props) => {
           id="description"
           placeholder="Description"
           onChange={(e) => {
-            setDescription(e.target.value);
+            onHandleChangeDescription(e.target.value);
           }}
           value={description}
         >
@@ -42,11 +50,11 @@ const AppForm = ({ onHandleButton }: Props) => {
             return;
           }
           onHandleButton(title, description);
-          setTitle("");
-          setDescription("");
+          onHandleChangeTitle("");
+          onHandleChangeDescription("");
         }}
       >
-        Save TODO
+        {isEdit ? "Edit Todo" : "Save Todo"}
       </AppButton>
     </>
   );

@@ -4,9 +4,10 @@ import editIcon from "../assets/edit-icon.png";
 interface Props {
   todos: { title: string; description: string }[];
   onDelete: (index: number) => void;
+  onEdit: (title: string, description: string, index: number) => void;
 }
 
-const DisplayToDo = ({ todos, onDelete }: Props) => {
+const DisplayToDo = ({ todos, onDelete, onEdit }: Props) => {
   return (
     <>
       {todos.map((todo, index) => (
@@ -23,7 +24,13 @@ const DisplayToDo = ({ todos, onDelete }: Props) => {
               >
                 <img src={deleteIcon} alt="Delete" />
               </button>
-              <button type="button" className="editBtn">
+              <button
+                type="button"
+                className="editBtn"
+                onClick={() => {
+                  onEdit(todo.title, todo.description, index);
+                }}
+              >
                 <img src={editIcon} alt="Edit" />
               </button>
             </div>
